@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAPSNAP — ألبوم صور لمحبي السفر</title>
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAFAF8;
+    --surface:#F1F1EE;
+    --border:#DEDED9;
+    --charcoal:#171717;
+    --text:#242424;
+    --text-muted:#737373;
+    --orange:#F47B20;
+    --orange-hover:#D9610D;
+    --orange-light:#FFF0E3;
+    --radius-photo: 6px;
+    --shadow-photo: 0 10px 24px rgba(23,23,23,0.14), 0 2px 6px rgba(23,23,23,0.08);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Tajawal', sans-serif;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.brand{
+    font-family:'El Messiri', serif;
+    color:var(--charcoal);
+    margin:0;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(250,250,248,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  header .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:16px; padding-bottom:16px;
+  }
+  .brand-mark{display:flex; align-items:center; gap:12px;}
+  .brand-mark img{height:40px; width:auto;}
+  .brand-mark .fallback-logo{
+    height:40px; width:40px; border-radius:50%;
+    background:var(--orange); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'El Messiri',serif; font-weight:700; font-size:19px;
+  }
+  .brand-name{font-size:22px; font-weight:600; letter-spacing:0.3px;}
+  .btn{
+    display:inline-block;
+    padding:13px 30px;
+    background:var(--orange);
+    color:#fff;
+    border-radius:999px;
+    font-weight:700;
+    font-size:16px;
+    transition:transform .18s ease, background .18s ease;
+    border:1px solid var(--orange);
+  }
+  .btn:hover{background:var(--orange-hover); border-color:var(--orange-hover); transform:translateY(-2px);}
+  .btn-ghost{
+    background:transparent; color:var(--charcoal); border:1px solid var(--charcoal);
+  }
+  .btn-ghost:hover{background:var(--charcoal); color:#fff;}
+  header .btn{padding:10px 24px; font-size:15px;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    min-height:88vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    padding:80px 20px 60px;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 38%, rgba(250,250,248,0.94) 0%, rgba(250,250,248,0.55) 55%, rgba(250,250,248,0) 78%);
+    z-index:2;
+    pointer-events:none;
+  }
+  .floaters{position:absolute; inset:0; z-index:1;}
+  .floater{
+    position:absolute;
+    border-radius:var(--radius-photo);
+    border:7px solid #fff;
+    box-shadow:var(--shadow-photo);
+    overflow:hidden;
+    background:linear-gradient(135deg,var(--surface),var(--border));
+    animation:drift 9s ease-in-out infinite alternate;
+  }
+  .floater img{width:100%; height:100%; object-fit:cover; display:block;}
+  @keyframes drift{
+    from{transform:translateY(0) rotate(var(--rot));}
+    to{transform:translateY(-16px) rotate(var(--rot));}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .floater{animation:none;}
+  }
+
+  .hero-content{position:relative; z-index:3; text-align:center; max-width:680px;}
+  .hero-content h1{
+    font-size:clamp(34px,5vw,58px);
+    font-weight:700;
+    line-height:1.28;
+  }
+  .hero-content p{
+    margin-top:22px;
+    font-size:18px;
+    color:var(--text-muted);
+    max-width:520px;
+    margin-left:auto; margin-right:auto;
+  }
+  .hero-cta{margin-top:34px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+
+  /* ---------- section shells ---------- */
+  section{padding:96px 0;}
+  .section-head{max-width:620px; margin:0 auto 56px; text-align:center;}
+  .section-head h2{font-size:clamp(28px,3.4vw,40px); font-weight:600;}
+  .section-head p{margin-top:14px; color:var(--text-muted); font-size:17px;}
+  .divider{
+    width:56px; height:3px; background:var(--orange); margin:0 auto 22px; border-radius:2px;
+  }
+
+  /* ---------- features ---------- */
+  .features{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0;
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+  }
+  .feature{
+    padding:36px 30px;
+    border-inline-start:1px solid var(--border);
+    text-align:right;
+  }
+  .feature:first-child{border-inline-start:none;}
+  .feature .num{
+    font-family:'El Messiri',serif; font-size:15px; color:var(--orange); font-weight:600;
+  }
+  .feature h3{font-size:21px; margin-top:14px; font-weight:600;}
+  .feature p{margin-top:10px; color:var(--text-muted); font-size:15.5px;}
+
+  /* ---------- gallery ---------- */
+  .gallery-strip{
+    background:#fff;
+  }
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+  }
+  .g-item{
+    aspect-ratio:1/1;
+    border-radius:var(--radius-photo);
+    overflow:hidden;
+    background:linear-gradient(135deg,var(--surface),var(--border));
+    position:relative;
+  }
+  .g-item img{width:100%; height:100%; object-fit:cover;}
+
+  /* ---------- get-your-album (buy) ---------- */
+  .get-album{text-align:center;}
+  .get-album h2{font-size:clamp(28px,3.4vw,40px); font-weight:600;}
+  .get-album .btn{margin-top:30px;}
+
+  /* ---------- cta banner ---------- */
+  .cta-banner{
+    background:var(--charcoal);
+    color:var(--bg);
+    text-align:center;
+    border-radius:18px;
+    padding:64px 32px;
+    margin:0 28px;
+  }
+  .cta-banner h2{color:#fff; font-size:clamp(26px,3.4vw,38px); font-weight:600;}
+  .cta-banner p{color:rgba(250,250,248,0.72); margin-top:14px; font-size:17px;}
+  .cta-banner .btn{margin-top:28px;}
+
+  /* ---------- footer ---------- */
+  footer{padding:56px 0 34px; text-align:center;}
+  footer .brand-mark{justify-content:center; margin-bottom:14px;}
+  footer p{color:var(--text-muted); font-size:14px; margin:4px 0;}
+
+  @media (max-width:860px){
+    .features{grid-template-columns:1fr;}
+    .feature{border-inline-start:none; border-top:1px solid var(--border);}
+    .feature:first-child{border-top:none;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);}
+    .hero{min-height:74vh;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand-mark">
+      <img src="logo.png" alt="MAPSNAP" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'fallback-logo',textContent:'M'}))">
+      <span class="brand-name">MAPSNAP</span>
+    </div>
+    <a class="btn" href="https://tally.so/r/VLe176" target="_blank" rel="noopener">اطلب نسختك</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="floaters" id="floaters"></div>
+  <div class="hero-content">
+    <h1>تصاورك يستحقوا أكثر<br>من Highlights Instagram</h1>
+    <p>حوّل صور سفرك إلى ألبوم مطبوع يبقى معك مدى الحياة — تصميم أنيق، ورق فاخر، وذكريات لا تضيع داخل الهاتف.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://tally.so/r/VLe176" target="_blank" rel="noopener">اطلب ألبومك الآن</a>
+      <a class="btn btn-ghost" href="#gallery">شاهد نماذج</a>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="feature">
+    <span class="num">٠١</span>
+    <h3>ورق فاخر يدوم</h3>
+    <p>صفحات مطفية بجودة عالية تحافظ على وضوح الألوان وتفاصيل كل صورة لسنوات طويلة.</p>
+  </div>
+  <div class="feature">
+    <span class="num">٠٢</span>
+    <h3>تصميم يعكس الرحلة</h3>
+    <p>نرتب الصور في تصميم متناسق يحكي قصة الرحلة بالترتيب الذي حدثت فيه، لا مجرد شبكة صور عشوائية.</p>
+  </div>
+  <div class="feature">
+    <span class="num">٠٣</span>
+    <h3>غلاف بخيارات متعددة</h3>
+    <p>اختر بين غلاف مقوى صلب أو غلاف قماشي، وأضف اسم الرحلة والتاريخ على الواجهة.</p>
+  </div>
+</section>
+
+<section class="gallery-strip" id="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="divider"></div>
+      <h2>نماذج من ألبومات مسافرين</h2>
+      <p>كل ألبوم يُصمَّم خصيصًا حسب صور صاحبه ووجهته، هذه لمحة من أعمال سابقة.</p>
+    </div>
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </div>
+</section>
+
+<section class="get-album">
+  <div class="wrap">
+    <h2>احصل على ألبومك الآن</h2>
+    <a class="btn" href="https://tally.so/r/VLe176" target="_blank" rel="noopener">اطلب الآن</a>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cta-banner">
+      <h2>لا تترك ذكريات رحلتك في الهاتف فقط</h2>
+      <p>اطلب ألبومك الآن وابدأ رحلة تحويل صورك إلى قطعة تُروى وتُتوارث.</p>
+      <a class="btn" href="https://tally.so/r/VLe176" target="_blank" rel="noopener">اطلب الآن</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand-mark">
+      <img src="logo.png" alt="MAPSNAP" style="height:32px" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'fallback-logo',style:'height:32px;width:32px;font-size:15px',textContent:'M'}))">
+      <span class="brand-name" style="font-size:18px">MAPSNAP</span>
+    </div>
+    <p>ألبومات مطبوعة لمحبي السفر</p>
+    <p>© 2026 MAPSNAP. جميع الحقوق محفوظة.</p>
+  </div>
+</footer>
+
+<script>
+  // Hero floating photobook thumbnails (images 1.jpg – 16.jpg placed in the same folder)
+  const heroLayout = [
+    {top:'8%',  left:'6%',  w:150, h:190, rot:-9},
+    {top:'55%', left:'3%',  w:130, h:170, rot:6},
+    {top:'12%', left:'20%', w:120, h:150, rot:7},
+    {top:'62%', left:'18%', w:150, h:120, rot:-5},
+    {top:'4%',  left:'38%', w:110, h:140, rot:-4},
+    {top:'70%', left:'34%', w:130, h:100, rot:8},
+    {top:'6%',  left:'58%', w:130, h:160, rot:5},
+    {top:'66%', left:'52%', w:140, h:180, rot:-7},
+    {top:'14%', left:'72%', w:150, h:120, rot:-6},
+    {top:'58%', left:'70%', w:120, h:150, rot:9},
+    {top:'2%',  left:'86%', w:130, h:170, rot:8},
+    {top:'64%', left:'86%', w:110, h:140, rot:-8},
+    {top:'34%', left:'2%',  w:100, h:130, rot:4},
+    {top:'30%', left:'90%', w:110, h:140, rot:-5},
+    {top:'40%', left:'44%', w:100, h:80,  rot:3},
+    {top:'82%', left:'62%', w:110, h:90,  rot:-4}
+  ];
+  const container = document.getElementById('floaters');
+  heroLayout.forEach((pos, i) => {
+    const n = i + 1;
+    const div = document.createElement('div');
+    div.className = 'floater';
+    div.style.top = pos.top;
+    div.style.left = pos.left;
+    div.style.width = pos.w + 'px';
+    div.style.height = pos.h + 'px';
+    div.style.setProperty('--rot', pos.rot + 'deg');
+    div.style.transform = `rotate(${pos.rot}deg)`;
+    div.style.animationDuration = (7 + (i % 5)) + 's';
+    div.style.animationDelay = (i * 0.3) + 's';
+    const img = document.createElement('img');
+    img.src = n + '.jpg';
+    img.alt = 'نموذج ألبوم سفر';
+    img.loading = 'lazy';
+    img.onerror = function(){ this.remove(); };
+    div.appendChild(img);
+    container.appendChild(div);
+  });
+
+  // Gallery grid (reuses the same 16 images, shown as squares)
+  const grid = document.getElementById('gallery-grid');
+  for (let n = 1; n <= 16; n++){
+    const item = document.createElement('div');
+    item.className = 'g-item';
+    const img = document.createElement('img');
+    img.src = n + '.jpg';
+    img.alt = 'ألبوم سفر رقم ' + n;
+    img.loading = 'lazy';
+    img.onerror = function(){ this.remove(); };
+    item.appendChild(img);
+    grid.appendChild(item);
+  }
+</script>
+
+</body>
+</html>
